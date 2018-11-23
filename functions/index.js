@@ -12,6 +12,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
     var elevatorId = parameters["number"];
     var buildingId = parameters["number"];
     var quoteId = parameters["number"];
+    console.log(action);
 
     response.setHeader("Content-Type", "application/json");
     if (action == "input.getElevatorsDeployed") {
@@ -23,9 +24,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
     } else if (action == "input.getBuildingName($number)") {
       getBuildingName(response, buildingId);
       return;
-    } else {
+    } else if (action == "input.getQuotesinfo($number)") {
         getQuotesInfo(response, quoteId);
       return; 
+    }
+    else {
+        return;
     }
   }
 );
@@ -160,7 +164,8 @@ function getQuotesInfo(CloudFnResponse, quoteid) {
       var QuoteEmail = response.Email;
       var QuoteBusinessName = response.BusinessName;
       var id = response.id;
-
+      console.log(QuoteEmail);
+      
       CloudFnResponse.send(
         buildChatResponse(
           "The business name is " + QuoteBusinessName + " and the quote type is " + QuoteType + ". You can contact the administrator by email at " + QuoteEmail + ". There aren't a lot of quotes ... the economy is not good. Time to lower the taxes!!!"
