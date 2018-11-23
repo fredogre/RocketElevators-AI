@@ -1,6 +1,6 @@
 "use strict";
 
-var https = require("https");
+
 var fetch = require("node-fetch");
 const functions = require("firebase-functions");
 const DialogFlowApp = require("actions-on-google").DialogFlowApp;
@@ -12,7 +12,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
     var elevatorId = parameters["number"];
     var buildingId = parameters["number"];
     var quoteId = parameters["number"];
-    console.log(action);
 
     response.setHeader("Content-Type", "application/json");
     if (action == "input.getElevatorsDeployed") {
@@ -164,7 +163,6 @@ function getQuotesInfo(CloudFnResponse, quoteid) {
       var QuoteEmail = response.Email;
       var QuoteBusinessName = response.BusinessName;
       var id = response.id;
-      console.log(QuoteEmail);
       
       CloudFnResponse.send(
         buildChatResponse(
